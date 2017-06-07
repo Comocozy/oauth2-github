@@ -1,13 +1,13 @@
 <?php
 
-namespace League\OAuth2\Client\Provider;
+namespace Comocozy\OAuth2\Client\Provider;
 
-use League\OAuth2\Client\Provider\Exception\GithubIdentityProviderException;
+use League\OAuth2\Client\Provider\Exception\NaverIdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Psr\Http\Message\ResponseInterface;
 
-class Github extends AbstractProvider
+class Naver extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
@@ -16,14 +16,7 @@ class Github extends AbstractProvider
      *
      * @var string
      */
-    public $domain = 'https://github.com';
-
-    /**
-     * Api domain
-     *
-     * @var string
-     */
-    public $apiDomain = 'https://api.github.com';
+    public $domain = 'https://nid.naver.com';
 
     /**
      * Get authorization url to begin OAuth flow
@@ -32,7 +25,7 @@ class Github extends AbstractProvider
      */
     public function getBaseAuthorizationUrl()
     {
-        return $this->domain.'/login/oauth/authorize';
+        return $this->domain.'/oauth2.0/authorize';
     }
 
     /**
@@ -44,7 +37,7 @@ class Github extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        return $this->domain.'/login/oauth/access_token';
+        return $this->domain.'/oauth2.0/token';
     }
 
     /**
@@ -56,10 +49,7 @@ class Github extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        if ($this->domain === 'https://github.com') {
-            return $this->apiDomain.'/user';
-        }
-        return $this->domain.'/api/v3/user';
+        return 'https://openapi.naver.com/v1/nid/me';
     }
 
     /**
@@ -78,8 +68,8 @@ class Github extends AbstractProvider
     /**
      * Check a provider response for errors.
      *
-     * @link   https://developer.github.com/v3/#client-errors
-     * @link   https://developer.github.com/v3/oauth/#common-errors-for-the-access-token-request
+     * @link   https://developers.naver.com/docs/login/api/
+     * @link   https://developers.naver.com/docs/login/profile/
      * @throws IdentityProviderException
      * @param  ResponseInterface $response
      * @param  string $data Parsed response data
@@ -88,9 +78,9 @@ class Github extends AbstractProvider
     protected function checkResponse(ResponseInterface $response, $data)
     {
         if ($response->getStatusCode() >= 400) {
-            throw GithubIdentityProviderException::clientException($response, $data);
+            throw NaverIdentityProviderException::clientException($response, $data);
         } elseif (isset($data['error'])) {
-            throw GithubIdentityProviderException::oauthException($response, $data);
+            throw NaverIdentityProviderException::oauthException($response, $data);
         }
     }
 
@@ -103,7 +93,7 @@ class Github extends AbstractProvider
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {
-        $user = new GithubResourceOwner($response);
+        $user = new NaverResourceOwner($response);
 
         return $user->setDomain($this->domain);
     }

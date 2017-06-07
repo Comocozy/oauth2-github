@@ -1,8 +1,8 @@
-<?php namespace League\OAuth2\Client\Provider;
+<?php namespace Comocozy\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 
-class GithubResourceOwner implements ResourceOwnerInterface
+class NaverResourceOwner implements ResourceOwnerInterface
 {
     use ArrayAccessorTrait;
 
@@ -67,19 +67,7 @@ class GithubResourceOwner implements ResourceOwnerInterface
      */
     public function getNickname()
     {
-        return $this->getValueByKey($this->response, 'login');
-    }
-
-    /**
-     * Get resource owner url
-     *
-     * @return string|null
-     */
-    public function getUrl()
-    {
-        $urlParts = array_filter([$this->domain, $this->getNickname()]);
-
-        return count($urlParts) ? implode('/', $urlParts) : null;
+        return $this->getValueByKey($this->response, 'nickname');
     }
 
     /**
