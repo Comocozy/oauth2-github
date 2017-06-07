@@ -1,6 +1,6 @@
 <?php
 
-namespace Comocozy\OAuth2\Client\Provider;
+namespace League\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Provider\Exception\NaverIdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
