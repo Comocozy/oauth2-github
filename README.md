@@ -12,7 +12,7 @@ composer require comocozy/oauth2-naver
 
 ## Usage
 
-Usage is the same as The League's OAuth client, using `\Comocozy\OAuth2\Client\Provider\Naver` as the provider.
+Usage is the same as The League's OAuth client, using `\League\OAuth2\Client\Provider\Naver` as the provider.
 
 ## Issue
 
