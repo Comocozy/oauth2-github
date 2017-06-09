@@ -37,7 +37,7 @@ class NaverResourceOwner implements ResourceOwnerInterface
      */
     public function getId()
     {
-        return $this->getValueByKey($this->response, 'id');
+        return $this->response['response']['id'];
     }
 
     /**
@@ -47,7 +47,7 @@ class NaverResourceOwner implements ResourceOwnerInterface
      */
     public function getEmail()
     {
-        return $this->getValueByKey($this->response, 'email');
+        return $this->response['response']['email'];
     }
 
     /**
@@ -57,7 +57,7 @@ class NaverResourceOwner implements ResourceOwnerInterface
      */
     public function getName()
     {
-        return $this->getValueByKey($this->response, 'name');
+        return $this->response['response']['name'];
     }
 
     /**
@@ -67,7 +67,17 @@ class NaverResourceOwner implements ResourceOwnerInterface
      */
     public function getNickname()
     {
-        return $this->getValueByKey($this->response, 'nickname');
+        return $this->response['response']['nickname'];
+    }
+
+    /**
+     * Get avatar URL
+     *
+     * @return string|null
+     */
+    public function getAvatarUrl()
+    {
+        return $this->response['response']['profile_image'];
     }
 
     /**
